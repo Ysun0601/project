@@ -4,7 +4,7 @@ from collections import Counter
 from time import sleep
 import datetime
 import re
-
+# 이게 진짜 코드야!!
 # Macie 및 S3 클라이언트 초기화
 macie2 = boto3.client('macie2', region_name='ap-northeast-2')
 s3_client = boto3.client('s3')
@@ -200,7 +200,7 @@ def analyze_object_content(bucket_name, key):
         file_extension = key.lower().split('.')[-1] if '.' in key else ''
         
         # 바이너리 파일 타입 처리 제외
-        binary_extensions = {'jpg', 'jpeg', 'png', 'gif', 'pdf', 'zip', 'exe', 'bin', 'xlsx'}
+        binary_extensions = {'jpg', 'jpeg', 'png', 'gif', 'pdf', 'zip', 'exe', 'bin', }
         if file_extension in binary_extensions:
             print(f"바이너리 파일 제외됨: {key}")
             return "NONE"
