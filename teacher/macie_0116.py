@@ -79,136 +79,33 @@ def create_all_identifiers():
     
     # SSN Identifier
     identifiers['ssn'] = create_custom_data_identifier_with_severity(
-        name="SSN-Identifier",
-        regex=r"\b\d{6}-\d{7}\b",  # 주민등록번호 형식
-        description="주민등록번호 형식 탐지",
-        threshold=1,
-        severity="HIGH",
-        tags={"Sensitivity": "HIGH"}
+        name="Korean SSN Pattern",
+        regex=r"\d{6}[-]\d{7}",
+        description="한국 주민등록번호 패턴",
+        severity="HIGH"
     )
-
-    # CCN Identifier
-    identifiers['ccn'] = create_custom_data_identifier_with_severity(
-        name="CCN-Identifier",
-        regex=r"\b\d{4}-\d{4}-\d{4}-\d{4}\b",  # 신용카드 번호 형식
-        description="신용카드 번호 형식 탐지",
-        threshold=1,
-        severity="HIGH",
-        tags={"Sensitivity": "HIGH"}
-    )
-
+    
     # Email Identifier
     identifiers['email'] = create_custom_data_identifier_with_severity(
-        name="Email-Identifier",
-        regex=r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",  # 이메일 형식
-        description="이메일 주소 탐지",
-        threshold=1,
-        severity="MEDIUM",
-        tags={"Sensitivity": "MEDIUM"}
+        name="Email Pattern",
+        regex=r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",
+        description="이메일 주소 패턴",
+        severity="MEDIUM"
     )
-
-    # Name Identifier
-    identifiers['name'] = create_custom_data_identifier_with_severity(
-        name="Name-Identifier",
-        regex=r"[가-힣]{2,4}",  # 한글 이름 형식
-        description="한글 이름 탐지",
-        threshold=1,
-        severity="MEDIUM",
-        tags={"Sensitivity": "MEDIUM"}
+    
+    # Phone Number Identifier
+    identifiers['phone'] = create_custom_data_identifier_with_severity(
+        name="Korean Phone Number Pattern",
+        regex=r"\d{2,3}[-]\d{3,4}[-]\d{4}",
+        description="한국 전화번호 패턴",
+        severity="MEDIUM"
     )
-  
-
-
+    
     return identifiers
-
-def get_findings():
-    """
-    Macie 탐지 결과 가져오기 - 개선된 버전
-    """
-    print("Macie에서 탐지 결과를 가져오는 중...")
-    findings = []
-    
-    try:
-        # 7일 전 시간으로 수정
-        start_time = int((datetime.datetime.now(datetime.timezone.utc) - 
-                         datetime.timedelta(days=7)).timestamp())
-        
-        paginator = macie2.get_paginator('list_findings')
-        
-        finding_criteria = {
-            'criterion': {
-                'type': {
-                    'eq': ['SensitiveData:S3Object/Personal']
-                },
-                'createdAt': {
-                    'gte': start_time
-                }
-            }
-        }
-        
-        try:
-            for page in paginator.paginate(
-                findingCriteria=finding_criteria,
-                sortCriteria={
-                    'attributeName': 'createdAt',
-                    'orderBy': 'DESC'
-                }
-            ):
-                if page.get('findingIds'):
-                    # 한 번에 최대 50개의 findingIds만 처리
-                    for i in range(0, len(page['findingIds']), 50):
-                        batch = page['findingIds'][i:i+50]
-                        response = macie2.get_findings(findingIds=batch)
-                        if response.get('findings'):
-                            findings.extend(response['findings'])
-                            print(f"- {len(response['findings'])}개의 결과를 가져왔습니다.")
-                        # API 제한 방지를 위한 지연
-                        sleep(0.5)
-        
-        except macie2.exceptions.ValidationException as ve:
-            print(f"검증 오류 발생: {ve}")
-            return []
-    
-    except Exception as e:
-        print(f"탐지 결과 조회 중 오류 발생: {e}")
-        return []
-    
-    print(f"\n총 {len(findings)}개의 탐지 결과를 찾았습니다.")
-    return findings
-
-def save_findings_to_file(findings, file_name="macie_findings.json"):
-    """
-    개선된 탐지 결과 저장 함수
-    """
-    try:
-        def custom_serializer(obj):
-            if isinstance(obj, (datetime.date, datetime.datetime)):
-                return obj.isoformat()
-            return str(obj)
-
-        # 저장할 데이터 구조화
-        formatted_findings = []
-        for finding in findings:
-            formatted_finding = {
-                'id': finding.get('id'),
-                'severity': finding.get('severity', {}).get('description'),
-                'created_at': finding.get('createdAt'),
-                'object_info': finding.get('resourcesAffected', {}).get('s3Object', {}),
-                'sensitive_data': finding.get('sensitiveData', []),
-                'type': finding.get('type')
-            }
-            formatted_findings.append(formatted_finding)
-
-        with open(file_name, "w", encoding="utf-8") as file:
-            json.dump(formatted_findings, file, ensure_ascii=False, indent=4, default=custom_serializer)
-        print(f"탐지 결과가 {file_name}에 저장되었습니다")
-    except Exception as e:
-        print(f"파일 저장 오류: {e}")
 
 def analyze_object_content(bucket_name, key):
     """
-    S3 객체의 내용을 분석하여 민감도 수준을 결정
-    다양한 인코딩 처리
+    S3 객체의 내용을 분석하여 민감도 수준을 결정하고 발견된 민감 정보를 추출
     """
     try:
         # S3 객체 내용 가져오기
@@ -229,208 +126,75 @@ def analyze_object_content(bucket_name, key):
 
         if content is None:
             print(f"인코딩 실패: {key}")
-            return "LOW"
+            return {"sensitivity": "LOW", "findings": {}}
 
         # 파일 확장자 확인
         file_extension = key.lower().split('.')[-1] if '.' in key else ''
         
         # 바이너리 파일 타입 처리 제외
-        binary_extensions = {'jpg', 'jpeg', 'png', 'gif', 'pdf', 'zip', 'exe', 'bin',}
+        binary_extensions = {'jpg', 'jpeg', 'png', 'gif', 'pdf', 'zip', 'exe', 'bin'}
         if file_extension in binary_extensions:
             print(f"바이너리 파일 제외됨: {key}")
-            return "NONE"
+            return {"sensitivity": "NONE", "findings": {}}
 
         # 민감 정보 패턴 정의
         patterns = {
-            'HIGH': [
-                r"\b\d{6}-\d{7}\b",  # 주민등록번호
-                r"\b\d{4}-\d{4}-\d{4}-\d{4}\b",  # 신용카드 번호
-            ],
-            'MEDIUM': [
-                r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",  # 이메일
-                r"[가-힣]{2,4}",  # 한글 이름               
-            ]
-            
+            'HIGH': {
+                '주민등록번호': r"\b\d{6}-\d{7}\b",
+                '신용카드번호': r"\b\d{4}-\d{4}-\d{4}-\d{4}\b",
+                '계좌번호': r"\b\d{11,14}\b",
+                '여권번호': r"[A-Z]\d{8}\b",
+            },
+            'MEDIUM': {
+                '이메일': r"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}",
+                '한글이름': r"[가-힣]{2,4}",
+                '전화번호': r"\b\d{2,3}[-\s]?\d{3,4}[-\s]?\d{4}\b",
+                '주소': r"[서울|경기|인천|대전|광주|대구|울산|부산|강원|충청|전라|경상|제주][가-힣]*\s[가-힣]+[시군구]\s[가-힣]+[동로길]",
+            }
         }
 
-        # 각 패턴별 매칭 횟수 확인
-        matches = {
-            'HIGH': 0,
-            'MEDIUM': 0
+        # 발견된 민감 정보 저장
+        findings = {
+            'HIGH': {},
+            'MEDIUM': {},
+            'total_count': 0
         }
 
-        for level, pattern_list in patterns.items():
-            for pattern in pattern_list:
-                matches[level] += len(re.findall(pattern, content))
+        highest_sensitivity = "LOW"
 
-        # 민감도 수준 결정
-        if matches['HIGH'] > 0:
-            return "HIGH"
-        elif matches['MEDIUM'] > 0:
-            return "MEDIUM"
-        return "LOW"
+        # 각 패턴별 매칭 확인 및 추출
+        for level, pattern_dict in patterns.items():
+            for pattern_name, pattern in pattern_dict.items():
+                matches = re.finditer(pattern, content)
+                found_items = [match.group() for match in matches]
+                
+                if found_items:
+                    # 중복 제거
+                    unique_items = list(set(found_items))
+                    findings[level][pattern_name] = {
+                        'count': len(found_items),
+                        'unique_count': len(unique_items),
+                        'samples': unique_items[:5]  # 최대 5개 샘플만 저장
+                    }
+                    findings['total_count'] += len(found_items)
+                    
+                    if level == 'HIGH':
+                        highest_sensitivity = "HIGH"
+                    elif level == 'MEDIUM' and highest_sensitivity != "HIGH":
+                        highest_sensitivity = "MEDIUM"
+
+        return {
+            "sensitivity": highest_sensitivity,
+            "findings": findings
+        }
 
     except Exception as e:
         print(f"객체 분석 오류 {key}: {e}")
-        return "LOW"
-
-def update_object_tags(bucket_name):
-    """
-    버킷 내 모든 객체의 내용을 분석하고 태그 업데이트
-    """
-    try:
-        objects = []
-        paginator = s3_client.get_paginator('list_objects_v2')
-        for page in paginator.paginate(Bucket=bucket_name):
-            if 'Contents' in page:
-                objects.extend(page['Contents'])
-
-        print(f"분석할 객체 수: {len(objects)}")
-
-        for obj in objects:
-            key = obj['Key']
-            print(f"\n객체 분석 중: {key}")
-
-            # 객체 내용 분석하여 민감도 결정
-            sensitivity = analyze_object_content(bucket_name, key)
-
-            try:
-                # 태그 업데이트
-                s3_client.put_object_tagging(
-                    Bucket=bucket_name,
-                    Key=key,
-                    Tagging={
-                        'TagSet': [
-                            {
-                                'Key': 'sensitivity',
-                                'Value': sensitivity
-                            }
-                        ]
-                    }
-                )
-                print(f"태그 업데이트 완료 - {key}: {sensitivity}")
-
-            except Exception as e:
-                print(f"태그 업데이트 실패 - {key}: {e}")
-
-    except Exception as e:
-        print(f"객체 목록 조회 실패: {e}")
-
-def process_findings(findings, bucket_name):
-    """
-    개선된 Macie 탐지 결과 처리 및 통계 생성
-    """
-    if not findings:
-        print("처리할 탐지 결과가 없습니다")
-        return
-
-    stats = {
-        'total_findings': len(findings),
-        'sensitivity_levels': Counter(),
-        'affected_objects': set(),
-        'finding_types': Counter(),
-        'detection_details': []
-    }
-
-    for finding in findings:
-        # 기본 정보 수집
-        severity = finding.get('severity', {}).get('description', 'UNKNOWN')
-        stats['sensitivity_levels'][severity] += 1
-        
-        # 탐지 유형 집계
-        finding_type = finding.get('type', 'UNKNOWN')
-        stats['finding_types'][finding_type] += 1
-        
-        # S3 객체 정보 수집
-        s3_object = finding.get('resourcesAffected', {}).get('s3Object', {})
-        if s3_object:
-            object_key = s3_object.get('key')
-            stats['affected_objects'].add(object_key)
-            
-            # 상세 탐지 정보 수집
-            detail = {
-                'object_key': object_key,
-                'severity': severity,
-                'finding_type': finding_type,
-                'created_at': finding.get('createdAt'),
-                'sensitive_data': []
-            }
-            
-            # 민감 데이터 상세 정보
-            if 'sensitiveData' in finding:
-                for data in finding['sensitiveData']:
-                    detail['sensitive_data'].append({
-                        'category': data.get('category'),
-                        'count': data.get('detections', {}).get('count', 0),
-                        'type': data.get('detections', {}).get('type')
-                    })
-            
-            stats['detection_details'].append(detail)
-
-    # 통계 출력
-    print("\n=== 탐지 결과 상세 통계 ===")
-    print(f"총 탐지 건수: {stats['total_findings']}")
-    
-    print("\n민감도 수준별 분포:")
-    for level, count in stats['sensitivity_levels'].items():
-        print(f"- {level}: {count}건")
-    
-    print("\n탐지 유형별 분포:")
-    for type_name, count in stats['finding_types'].items():
-        print(f"- {type_name}: {count}건")
-    
-    print(f"\n영향받은 객체 수: {len(stats['affected_objects'])}")
-    
-    print("\n상세 탐지 정보:")
-    for detail in stats['detection_details']:
-        print(f"\n파일: {detail['object_key']}")
-        print(f"심각도: {detail['severity']}")
-        print("탐지된 민감 정보:")
-        for data in detail['sensitive_data']:
-            print(f"- {data['category']}: {data['count']}건")
-
-    return stats
-
-def wait_for_job_completion(job_id, timeout_minutes=5):
-    """
-    분류 작업 완료 대기
-    """
-    try:
-        print(f"작업 완료 대기 중... (최대 {timeout_minutes}분)")
-        start_time = datetime.datetime.now()
-        
-        while True:
-            response = macie2.describe_classification_job(jobId=job_id)
-            status = response['jobStatus']
-            
-            if status == 'COMPLETE':
-                print("작업이 성공적으로 완료되었습니다.")
-                return True
-            elif status == 'FAILED':
-                print(f"작업이 실패했습니다: {response.get('errorMessage', '알 수 없는 오류')}")
-                return False
-            elif status in ['RUNNING', 'IDLE']:
-                current_time = datetime.datetime.now()
-                elapsed_minutes = (current_time - start_time).total_seconds() / 60
-                
-                if elapsed_minutes > timeout_minutes:
-                    print(f"타임아웃: {timeout_minutes}분이 경과했습니다.")
-                    return False
-                
-                print(f"작업 진행 중... (상태: {status})")
-                sleep(30)  # 30초 대기
-            else:
-                print(f"예상치 못한 작업 상태: {status}")
-                return False
-                
-    except Exception as e:
-        print(f"작업 상태 확인 중 오류 발생: {e}")
-        return False
-
+        return {"sensitivity": "LOW", "findings": {}}
 
 if __name__ == "__main__":
     try:
-        bucket_name = input("bucket name : ")
+        bucket_name = "macimus-user-data-2"
         
         # 1. 사용자 지정 데이터 식별자 생성
         print("\n1. 사용자 지정 데이터 식별자 생성 중...")
@@ -461,15 +225,16 @@ if __name__ == "__main__":
                     key = obj['Key']
                     print(f"\n객체 분석 중: {key}")
 
-                    # 객체 내용 분석하여 민감도 결정
-                    sensitivity = analyze_object_content(bucket_name, key)
+                    # 객체 내용 분석하여 민감도 결정 및 민감 정보 추출
+                    analysis_result = analyze_object_content(bucket_name, key)
                     
                     # 분석 결과 저장
                     result = {
                         'object_key': key,
                         'size': obj['Size'],
                         'last_modified': obj['LastModified'].isoformat(),
-                        'sensitivity_level': sensitivity
+                        'sensitivity_level': analysis_result['sensitivity'],
+                        'sensitive_data_findings': analysis_result['findings']
                     }
                     analysis_results.append(result)
 
@@ -482,12 +247,21 @@ if __name__ == "__main__":
                                 'TagSet': [
                                     {
                                         'Key': 'sensitivity',
-                                        'Value': sensitivity
+                                        'Value': analysis_result['sensitivity']
                                     }
                                 ]
                             }
                         )
-                        print(f"태그 업데이트 완료 - {key}: {sensitivity}")
+                        print(f"태그 업데이트 완료 - {key}: {analysis_result['sensitivity']}")
+                        
+                        # 발견된 민감 정보 요약 출력
+                        if analysis_result['findings']['total_count'] > 0:
+                            print("\n발견된 민감 정보 요약:")
+                            for level in ['HIGH', 'MEDIUM']:
+                                if analysis_result['findings'][level]:
+                                    print(f"\n{level} 수준 발견사항:")
+                                    for pattern_name, details in analysis_result['findings'][level].items():
+                                        print(f"- {pattern_name}: {details['count']}건 발견 (고유 항목: {details['unique_count']}개)")
 
                     except Exception as e:
                         print(f"태그 업데이트 실패 - {key}: {e}")
