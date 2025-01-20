@@ -1,0 +1,655 @@
+[
+    {
+        "id": "1f09e602cc63dd822a78a5b4b7c76088",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:39.032000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "d694946b6e407ec3f78679481c2c2fcc",
+            "extension": "json",
+            "key": "user_010_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:20+00:00",
+            "path": "n3-macimus-sensitive-data/user_010_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 156,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "3a6401cc4537940817c298bd80086a02",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:39.032000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "d90c2af48fd76d79899fd4fbba1ad8e1",
+            "extension": "json",
+            "key": "user_080_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:25+00:00",
+            "path": "n3-macimus-sensitive-data/user_080_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 161,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "9100145186bd30f21ad3c1c083d8ad3a",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:39.032000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "a9bfa61c8d660a41f1cfd4082fa804c9",
+            "extension": "json",
+            "key": "user_059_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:24+00:00",
+            "path": "n3-macimus-sensitive-data/user_059_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 165,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "d97352f3943a950ba77bfb263a37f834",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:39.032000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "e294d061ddc478799fdcb914bf34064a",
+            "extension": "json",
+            "key": "user_073_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:25+00:00",
+            "path": "n3-macimus-sensitive-data/user_073_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 162,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "19430e3b6cdaac228fc6c2f7ca3b559f",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:38.994000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "c202b7d97e5618c8984ece325607647a",
+            "extension": "json",
+            "key": "user_048_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:22+00:00",
+            "path": "n3-macimus-sensitive-data/user_048_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 157,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "8862c68fbf726637c42dc77100f91309",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:38.994000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "311981e37eb27543c08f6a2e048a0a0f",
+            "extension": "json",
+            "key": "user_031_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:21+00:00",
+            "path": "n3-macimus-sensitive-data/user_031_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 163,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "6bbba195215d5b042d7ffc06900f2b1c",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:38.993000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "b40a570236fecbf88009a0a83a04dc6e",
+            "extension": "json",
+            "key": "user_020_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:21+00:00",
+            "path": "n3-macimus-sensitive-data/user_020_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 163,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "296cc3fc8512abfbfae51508ca84d20f",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:16.538000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "de5fd0019760735592c4837af563397a",
+            "extension": "json",
+            "key": "user_065_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:24+00:00",
+            "path": "n3-macimus-sensitive-data/user_065_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 157,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "706ea9a3029597596b3ceee6ffcd5f56",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:16.538000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "a49880e73c173d30e376d98aba8932f9",
+            "extension": "json",
+            "key": "user_039_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:22+00:00",
+            "path": "n3-macimus-sensitive-data/user_039_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 162,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "867cb22bfd6f25ef54293a3733cd713f",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:16.538000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "5a2688a2e53c93b1da5231d1b314d65d",
+            "extension": "json",
+            "key": "user_097_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:26+00:00",
+            "path": "n3-macimus-sensitive-data/user_097_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 162,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "b0016c4d63a22b2f688c59855288e9f2",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:16.538000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "f4ccee7339907a6cdb3f4672d62241de",
+            "extension": "json",
+            "key": "user_043_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:22+00:00",
+            "path": "n3-macimus-sensitive-data/user_043_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 159,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "d8bc940e5fd474533bfd1652b735cfa3",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:16.538000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "d10d1b266e594e3ed6c4c45ee909debd",
+            "extension": "json",
+            "key": "user_032_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:21+00:00",
+            "path": "n3-macimus-sensitive-data/user_032_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 166,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "ec70f606f6c715cb3b2afb04702dd944",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:16.538000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "90a27ed117b0f53d5f85ccee9d376f07",
+            "extension": "json",
+            "key": "user_052_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:23+00:00",
+            "path": "n3-macimus-sensitive-data/user_052_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 161,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "f350998309e39f207a3ef063f003a2c5",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:16.538000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "800e62c827f4f14f31771809295a83bb",
+            "extension": "json",
+            "key": "user_044_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:22+00:00",
+            "path": "n3-macimus-sensitive-data/user_044_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 166,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "f48e6ed43cb6bb504d6918603e41529e",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:16.538000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "6c517e6273f005a65264875fec037bef",
+            "extension": "json",
+            "key": "user_022_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:21+00:00",
+            "path": "n3-macimus-sensitive-data/user_022_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 162,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "f7759cbfb11829189e2c5669fc04b558",
+        "severity": "High",
+        "created_at": "2025-01-13T09:23:16.538000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "15506418c19550209b24c43af69aa18c",
+            "extension": "json",
+            "key": "user_083_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:25+00:00",
+            "path": "n3-macimus-sensitive-data/user_083_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 158,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "0875c17a968f09c419b3b17fafae4241",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "44d0d63f738b3b53750da5b4e4173df8",
+            "extension": "json",
+            "key": "user_028_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:21+00:00",
+            "path": "n3-macimus-sensitive-data/user_028_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 163,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "0fb932e31401b2540ac108ea1c0b55df",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "edaf9b7a38b68741801aa133ff5704ce",
+            "extension": "json",
+            "key": "user_100_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:26+00:00",
+            "path": "n3-macimus-sensitive-data/user_100_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 160,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "171f7be473805ca1d4641f3baa958c1e",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "6bd908393bb614c4fca77cc9e28b3c88",
+            "extension": "json",
+            "key": "user_094_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:26+00:00",
+            "path": "n3-macimus-sensitive-data/user_094_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 163,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "1a2d885408e13fdae96044ed4295df3c",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "67281186a803b52ff366b15bb3a52fa5",
+            "extension": "json",
+            "key": "user_001_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:19+00:00",
+            "path": "n3-macimus-sensitive-data/user_001_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 163,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "216026be5d46a6d75829f7cbcfc1eace",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "1822905a9b8b6239f89531f4aa90ba15",
+            "extension": "json",
+            "key": "user_082_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:25+00:00",
+            "path": "n3-macimus-sensitive-data/user_082_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 161,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "24ce26d790bad69f17614e11eec4c7cc",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "03137eb5332dcce2043a22b5a51dc59a",
+            "extension": "json",
+            "key": "user_026_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:21+00:00",
+            "path": "n3-macimus-sensitive-data/user_026_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 161,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "2e716e4edbaba2e4a9508db07114c5a3",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "fee535b1380e711379f52c01429b0523",
+            "extension": "json",
+            "key": "user_003_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:19+00:00",
+            "path": "n3-macimus-sensitive-data/user_003_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 164,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "ae8797083d9876878ff0eae6371f8361",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "3384eec01fe13c009a18c9d3914e2cb8",
+            "extension": "json",
+            "key": "user_035_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:22+00:00",
+            "path": "n3-macimus-sensitive-data/user_035_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 164,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "ba436dbf926df27afadd361a6dba81f3",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "5bd960a973173bafc8cef668b48b3c6f",
+            "extension": "json",
+            "key": "user_049_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:23+00:00",
+            "path": "n3-macimus-sensitive-data/user_049_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 163,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "da94dc538505e2430c45177400eeaa32",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "c160da0de2d3a243a5d40d0ec07f434c",
+            "extension": "json",
+            "key": "user_058_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:24+00:00",
+            "path": "n3-macimus-sensitive-data/user_058_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 160,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "f666ace8d8177052598583d9ed316357",
+        "severity": "High",
+        "created_at": "2025-01-13T09:22:39.161000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::n3-macimus-sensitive-data",
+            "eTag": "13173bc39a2d0136a4d55f375996bfc4",
+            "extension": "json",
+            "key": "user_064_high_sensitive_data.json",
+            "lastModified": "2025-01-13T09:03:24+00:00",
+            "path": "n3-macimus-sensitive-data/user_064_high_sensitive_data.json",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "AES256"
+            },
+            "size": 162,
+            "storageClass": "STANDARD",
+            "tags": [],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    },
+    {
+        "id": "32ca2ea6-75fc-5aa2-0933-fe7fe7998607",
+        "severity": "Low",
+        "created_at": "2025-01-13T01:35:09.816000+00:00",
+        "object_info": {
+            "bucketArn": "arn:aws:s3:::macie-sample-finding-bucket",
+            "eTag": "be5a6c82893ecaa8bb29bd36831e457",
+            "extension": "pdf",
+            "key": "personal.pdf",
+            "lastModified": "2021-08-18T18:35:25+00:00",
+            "path": "macie-sample-finding-bucket/personal.pdf",
+            "publicAccess": false,
+            "serverSideEncryption": {
+                "encryptionType": "NONE"
+            },
+            "size": 8900,
+            "storageClass": "STANDARD",
+            "tags": [
+                {
+                    "key": "Division",
+                    "value": "HR"
+                },
+                {
+                    "key": "Team",
+                    "value": "Recruiting"
+                }
+            ],
+            "versionId": ""
+        },
+        "sensitive_data": [],
+        "type": "SensitiveData:S3Object/Personal"
+    }
+]

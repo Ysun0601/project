@@ -1,0 +1,108 @@
+{
+    "analysis_date": "2025-01-18T12:21:14.484198",
+    "bucket_name": "macimus-data",
+    "total_objects": 2,
+    "results": [
+        {
+            "object_key": "Macimus_Data.json",
+            "size": 13046,
+            "last_modified": "2025-01-18T02:45:06+00:00",
+            "sensitivity_level": "MEDIUM",
+            "sensitive_data_findings": {
+                "HIGH": {},
+                "MEDIUM": {
+                    "이메일": {
+                        "count": 100,
+                        "unique_count": 100,
+                        "samples": [
+                            "xyjvkqv@example.com",
+                            "ohckf@example.com",
+                            "usenuiw@example.com",
+                            "ccmdrtrh@example.com",
+                            "gmoojh@example.com"
+                        ]
+                    },
+                    "이름": {
+                        "count": 100,
+                        "unique_count": 95,
+                        "samples": [
+                            "김정남",
+                            "허윤서",
+                            "박민석",
+                            "박재현",
+                            "허지혜"
+                        ]
+                    },
+                    "전화번호": {
+                        "count": 100,
+                        "unique_count": 100,
+                        "samples": [
+                            "010-9909-5496",
+                            "010-7407-4389",
+                            "010-0693-5403",
+                            "010-2196-5322",
+                            "010-5970-5312"
+                        ]
+                    },
+                    "주소": {
+                        "count": 100,
+                        "unique_count": 100,
+                        "samples": [
+                            "70885",
+                            "06644",
+                            "97527",
+                            "94489",
+                            "50849"
+                        ]
+                    }
+                },
+                "total_count": 400
+            }
+        },
+        {
+            "object_key": "Macimus_Sensitive_Data.json",
+            "size": 10802,
+            "last_modified": "2025-01-18T02:45:06+00:00",
+            "sensitivity_level": "HIGH",
+            "sensitive_data_findings": {
+                "HIGH": {
+                    "주민등록번호": {
+                        "count": 100,
+                        "unique_count": 100,
+                        "samples": [
+                            "390601-1440623",
+                            "410006-2763423",
+                            "080200-1158327",
+                            "360701-1970994",
+                            "910829-1844681"
+                        ]
+                    },
+                    "신용카드번호": {
+                        "count": 100,
+                        "unique_count": 100,
+                        "samples": [
+                            "2406-2585-8216-2160",
+                            "3053-6605-4544-6800",
+                            "4728-3436-1988-1599",
+                            "3465-0890-0127-8090",
+                            "3596-0573-1828-1783"
+                        ]
+                    },
+                    "계좌번호": {
+                        "count": 100,
+                        "unique_count": 100,
+                        "samples": [
+                            "796-30-845873",
+                            "768-94-272572",
+                            "517-88-930105",
+                            "225-40-046089",
+                            "611-57-800131"
+                        ]
+                    }
+                },
+                "MEDIUM": {},
+                "total_count": 300
+            }
+        }
+    ]
+}
