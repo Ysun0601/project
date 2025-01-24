@@ -1,0 +1,57 @@
+< 구현 가이드 >
+1. 로그 수집 설정
+Route 53 Resolver Query Logs
+(1)AWS Management Console에서 Route 53 서비스로 이동.
+(2)"Resolver Query Logs" 설정을 활성화.
+(3)로그 데이터를 저장할 S3 버킷 또는 CloudWatch Logs 선택.
+
+Amazon VPC Flow Logs
+(1)VPC 콘솔에서 Flow Logs 생성.
+(2)대상(S3 또는 CloudWatch Logs) 선택.
+(3)필터를 "Reject"로 설정하여 비정상 트래픽만 기록(옵션).
+
+AWS CloudTrail
+(1)AWS Management Console에서 CloudTrail 활성화.
+(2)모든 리전에서 API 이벤트 로그 수집 설정.
+(3)S3 버킷을 로그 저장소로 지정.
+
+2. 탐지 및 분석 설정
+Amazon GuardDuty
+(1)GuardDuty를 활성화하고, 데이터 소스(VPC Flow Logs, DNS Logs, CloudTrail) 연결.
+(2)탐지 이벤트를 Security Hub로 전달하도록 설정.
+
+AWS Security Hub
+(1)Security Hub를 활성화하고 GuardDuty를 통합.
+(2)서드파티 위협 인텔리전스 피드(예: CrowdStrike, Recorded Future) 추가.
+
+Amazon Athena
+(1)S3에 저장된 로그 데이터로 Glue 테이블 생성.
+(2)Athena에서 SQL 쿼리를 실행하여 이상 트래픽 패턴 분석.
+
+3. 데이터 시각화
+Amazon OpenSearch Service
+(1)OpenSearch 클러스터 생성.
+(2)VPC Flow Logs 및 DNS Logs 데이터를 인덱싱.
+(3)대시보드 생성:
+(4)주요 악성 도메인 요청.
+(5)감염된 인스턴스.
+(6)시간대별 C2 통신 시도.
+
+4. 자동 대응 설정
+Amazon EventBridge
+(1)GuardDuty의 "High Severity" 이벤트를 트리거로 규칙 생성.
+(2)Lambda 함수 호출.
+
+AWS WAF
+(1)WAF에서 IP 블록리스트 규칙 생성.
+(2)Lambda에서 업데이트한 IP가 자동으로 차단되도록 설정.
+
+5. 보안 강화 설정
+AWS Config
+(1)Config 규칙 생성:
+(2)보안 그룹이 예상치 못하게 변경되었는지 확인.
+(3)IAM 정책의 과도한 권한 부여 탐지.
+
+IAM Access Analyzer
+(1)IAM 콘솔에서 Access Analyzer 활성화.
+(2)감염된 리소스와 연관된 IAM 권한 검토.
