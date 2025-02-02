@@ -1,0 +1,54 @@
+   1. 보안 모니터링
+      - Route 53
+            - 역할 : DNS 요청 추적, 악성 도메인 요청 탐지
+            - 출력 : DNS 요청 로그(악성 도메인 탐지 포함)
+      - VPC Flow Logs
+            - 역할 : 네트워크 트래픽 로그를 생성하여 허용/거부된 연결 기록
+            - 출력 : 네트워크 요청 로그 (소스 IP, 대상 IP, 프로토콜, 포트)
+      - CloudTrail
+            - 역할 : API 호출 및 사용자 활동 로그 기록, IAM 비정상 액세스 탐지
+            - 출력 : API 호출 로그(사용자, IP, 작업 내용)
+         
+         
+   
+   2. 보안 탐지
+      - GuardDuty
+            - 역할 : VPC Flow Logs, DNS Query Logs, CloudTrail 데이터 분석으로 비정상 트래픽 및 악성 도메인 탐지 
+            - 출력 : 위협 이벤트(예: Trojan, Port Scanning, C2 통신 시도).
+      - Security Hub
+            - 역할 : 탐지된 위협 이벤트 통합 관리, Threat Intelligence 연계로 심각도 평가
+            - 출력 : 이벤트 통합, 상태 보고서, 심각도 평가 결과
+         
+         
+         
+         
+   3. 보안 로그 분석
+      - S3
+            - 역할 : 로그 데이터
+            - 출력 : 로그 파일
+      - Glue
+            - 역할 : 로그 데이터의 ETL 프로세스 자동화(추출, 변환, 적재) 및 OpenSearch로 전달
+            - 출력 : 로그 데이터베이스
+      - Athena
+            - 역할 : 정리된 로그 데이터를 SQL 기반으로 분석
+            - 출력 : 보안 이벤트 분석(예: C2 통신 시도 패턴, 비정상 트래픽 소스)
+         
+         
+      
+         
+   4. 분석 데이터 시각화
+      - OpenSearch Service
+            - Kibana 외에도 OpenSearch Dashboards가 활용될 수 있으므로 이를 함께 명시
+            
+         
+         
+         
+   5. 보안 대응 자동화
+      - EventBridge
+            - 역할 : 위협 이벤트 발생 시 Lambda 트리거
+            - 출력 : Lambda로 전달되는 이벤트 데이터
+      - Lambda
+            - 역할 : 실시간 보안 조치 수행 (보안 그룹 수정 외에도 악성 IP 차단, WAF 업데이트)
+            - 출력 : 처리 완료 상태 로그
+      - SNS
+            - 역할 : 이메일,SMS 등으로 보안 알림 전송

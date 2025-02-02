@@ -1,0 +1,86 @@
+1. Dummy_Data.py -> 10000명 사용자의 더미 데이터 생성 -> dummy_data_random_ids.csv 파일
+2. S3_User_Data_Bucket_Create.py -> 사용자 더미 데이터를 저장한 버킷(macimus-data) 생성 및 데이터 파일 업로드
+                                            -> macimus-data 버킷에 s3:GetObject(버킷에서 객체를 가져오는 작업),
+                                            -> macimus-data 버킷에 s3:ListBucket(버킷을 나열) 2개의 권한을 업데이트
+3. CloudTrail_Bucket_Create.py -> 로그를 담을 버킷 생성, 정책 설정, CloudTrail 생성, CloudTrail 로깅 시작 구현
+                                        -> CloudTrail 데이터 이벤트를 활성화하는 코드
+---------------------------------------------------------------------------------------------------------------------------
+* CloudTrail 로그
+CloudTrail은 AWS API 호출과 관련된 이벤트를 기록합니다. 
+데이터가 담긴 버킷에 대한 읽기/쓰기 접근은 다음과 같은 방식으로 CloudTrail 로그에 기록됩니다
+
+<기록되는 이벤트>
+GetObject: S3 객체를 읽은 경우.
+PutObject: S3 객체를 생성하거나 수정한 경우.
+DeleteObject: S3 객체를 삭제한 경우.
+ListBucket: 버킷의 객체 목록을 나열한 경우
+
+<로그 저장 위치>
+CloudTrail은 로그 버킷에 기록되며, 설정 시 지정한 S3 버킷에 JSON 형식으로 저장됩니다.
+CloudTrail Data Events를 활성화하면 S3 버킷 내 객체와 관련된 모든 작업이 기록됩니다.
+이 설정이 없으면 기본적으로 S3 API 호출만 기록되고, 객체 수준의 작업은 기록되지 않습니다.
+--------------------------------------------------------------------------------------------------------------------------
+4. Macie_Function.py -> 사용자 정의 데이터 식별자 생성, Macie 활성화, 민감데이터 분류 작업, 
+위 코드는 민감 데이터를 탐지하는데 중점을 둔 코드, 민감 데이터에 접근한 로그를 탐지하는 기능이 아니다.
+* boto3를 사용한 데이터 이벤트 확인 코드
+import boto3
+
+def check_data_events(trail_name):
+    """
+    CloudTrail 데이터 이벤트 상태 확인
+    """
+    cloudtrail_client = boto3.client('cloudtrail', region_name='ap-northeast-2')
+    try:
+        response = cloudtrail_client.get_event_selectors(TrailName=trail_name)
+        print(f"Data events for trail '{trail_name}':")
+        for selector in response['EventSelectors']:
+            print(selector)
+    except Exception as e:
+        print(f"Error checking data events: {e}")
+
+if __name__ == "__main__":
+    trail_name = "macimus-cloudtrail"  # CloudTrail 이름
+    check_data_events(trail_name)
+---------------------------------------------------------------------------------------------------------
+eventName: "ListManagedDataIdentifiers"
+
+이 이벤트는 Macie에서 관리형 데이터 식별자(Managed Data Identifiers)를 나열하는 API 호출을 나타냅니다.
+관리형 데이터 식별자는 Macie에서 사전 정의된 데이터 식별자로, 예를 들어 주소, 금융 정보, 여권 번호 등과 같은 
+민감한 데이터 유형을 탐지하는 데 사용됩니다.
+---------------------------------------------------------------------------------------------------------------------------
+구성 :  EventBridge -> Lambda 연결 : EventBridge 규칙 ARN을 사용하여 Lambda 함수의 트리거로 추가
+         ARN : arn:aws:events:ap-northeast-2:423623825149:rule/SensitiveDataAccessAlert
+         Lambda → SNS 연결 : Lambda 함수에서 SNS ARN을 참조하여 알림 전송
+테스트 : S3 데이터 접근 이벤트를 트리거 -> SNS를 통해 알림을 확인
+
+EventBridge에서 나온 이벤트를 연결할 Lambda 함수 먼저 생성하기 전 Lambda 실행 역할 생성 코드
+5. Create_Lambda.Role.py - 권한 추가 ("logs:CreateLogGroup","logs:CreateLogStream","logs:PutLogEvents")
+                                                  "s3:GetObject", "s3:ListBucket", "s3:PutObject"
+                                             "macie2:GetFindings","macie2:ListFindings","macie2:CreateClassificationJob"
+                                          "cloudtrail:LookupEvents","cloudtrail:GetEventSelectors","cloudtrail:ListTrails"
+이렇게 해서 만든 규칙이 "LambdaExecutionRole"
+6. zip 파일을 위해 Lambda_Handler.py 생성
+7. Create_Lambda.py -> 람다 함수 생성(함수 이름, 규칙 arn, handler, runtime, zip 파일 경로)
+8. Create_Rule.py -> 이벤트 브릿지 규칙 생성, 이벤트 브릿지 규칙에 람다 함수 연결
+9. Create_Topic.py -> SNS 주제(SensitiveDataAlertTopic) 생성
+10. Subscribe_to_Sns.py -> SNS 주제에 구독 추가(이메일로) - 알림용
+------------------------------------------------------------------------------------------------
+앞서 생성된 Lambda 함수에서 alert_topic_arn 변수가 SNS 주제 ARN과 일치하는지 확인하세요
+------------------------------------------------------------------------------------------------
+11. Put_Test_Event.py ->  EventBridge를 통해 트리거 테스트
+: 민감한 데이터 접근 시나리오를 테스트하여 Lambda 함수가 실행되고 SNS를 통해 알림이 전송되는지 확인합니다
+
+결과 :
+1. Source 필드에 대한 권한 문제
+Source 필드가 "aws.macie"로 설정되어 있지만, 이 이벤트 소스에 대해 EventBridge 규칙이 적절히 구성되지 않았거나 권한이 부족합니다.
+EventBridge는 이벤트 소스를 확인하며, "aws.macie"는 Macie 서비스에서 발생하는 실제 이벤트 소스이므로 테스트 이벤트로는 적합하지 않을 수 있습니다.
+
+2. 규칙에서 Source와 DetailType이 일치하지 않음
+EventBridge 규칙은 특정 Source 및 DetailType을 기준으로 이벤트를 처리합니다. 그러나 테스트 이벤트의 Source와 DetailType이 규칙과 일치하지 않으면 이벤트가 거부됩니다.
+--------------------------------------------------------------------
+테스트 이벤트로 사전 점검
+개발 중에는 "custom.test"로 설정하여 EventBridge, Lambda, SNS 간 연계 및 처리가 올바르게 작동하는지 확인
+작동이 검증되면, EventBridge 규칙의 **Source**와 **DetailType**을 실제 Macie 이벤트와 일치시키고
+ Macie 데이터를 활용합니다
+
+
